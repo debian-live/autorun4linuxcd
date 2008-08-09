@@ -1,0 +1,21 @@
+TODO list for live-helper
+-------------------------
+
+This file lists only outstanding tasks. Any additions/comments/questions and
+help is welcome. Write to <debian-live-devel@lists.alioth.debian.org>.
+
+ * key event handler should intercept "Fn" keys, not digit keys.
+ * convert syslinux menu files as HTML.
+ * support grub/iso
+ * detect di installer (if the CD has a /install/ folder)
+ * Detect winXP/64
+
+ * testing !
+   - Win 2000 and Vista
+   - Languages detection
+
+BUGS
+----
+Some known bugs and known limitation
+ * syslinux.cfg's INCLUDE isn't implemented.
+ * This folder containing this script must not contain any special chars

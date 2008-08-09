@@ -1,0 +1,17 @@
+Source: autorun4linuxcd
+Section: otherosfs
+Priority: extra
+Maintainer: Debian Live <debian-live-maint@lists.alioth.debian.org>
+Uploaders: Franklin Piat <fpiat@klabs.be>
+Build-Depends: debhelper (>= 7), dpatch, mingw32
+Standards-Version: 3.8.0
+Homepage: http://www.klabs.be/~fpiat/projects/autorun4linuxCD/
+Vcs-Browser: http://git.debian.org/git/debian-live/autorun4linuxcd.git
+Vcs-Git: git://git.debian.org/git/debian-live/autorun4linuxcd.git
+
+Package: autorun4linuxcd
+Architecture: amd64 i386
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Menu for Debian Live under Windows
+ This package contains a menu system for Debian Live under Windows. It is only
+ useful for live-helper, while building CD images.

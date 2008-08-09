@@ -1,0 +1,3 @@
+autorun.inf		/usr/lib/autorun4linuxcd/
+autorun/*		/usr/lib/autorun4linuxcd/autorun/
+shellrun/shellrun.exe	/usr/lib/autorun4linuxcd/autorun/shellrun/

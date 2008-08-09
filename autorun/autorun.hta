@@ -1,0 +1,178 @@
+<html lang="en" xml:lang="en" dir="ltr" id="html">
+<!-- ###################################################################### ##
+	auturun.hta - Autorun 4 Debian Linux-CD (under Windows)
+
+    HISTORY :
+	autorun4linuxCD (0.13)
+	  * Improve "About" and "FrontCover" tabs
+        * Implement "Help page" button
+
+	autorun4linuxCD (0.11)
+	  * Application name is now derived from the CD's Label.
+	  * Locales Names
+	  * Some cleanup
+
+	  - Copyright (C) 2007 Franklin Piat <fpiat@bigfoot.com>
+
+	autorun4linuxCD (0.10)
+	  * Initial (early) release.
+
+	  - Copyright (C) 2007 Franklin Piat <fpiat@bigfoot.com>
+
+    LICENSE :
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 2 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful, but
+	WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	General Public License for more details.
+
+	On Debian GNU/Linux systems, the complete text of the GNU General Public
+	License can be found in ‘/usr/share/common-licenses/GPL’ or in the dpkg
+	source as the file ‘COPYING’
+
+ ##  ###################################################################### -->
+<head>
+<HTA:APPLICATION ID="oHTA" APPLICATIONNAME="Autorun for Linux CDs" VERSION="0.13"
+	WINDOWSTATE="normal"
+	SCROLL="auto" SCROLLFLAT="yes" INNERBORDER="no"
+	CAPTION="yes" SYSMENU="yes" ICON="favicon.ico" MAXIMIZEBUTTON="no" MINIMIZEBUTTON="yes"
+	BORDER="normal" BORDERSTYLE="normal"
+	NAVIGABLE="no"
+	SELECTION="yes" CONTEXTMENU="yes"
+	SINGLEINSTANCE="yes" SHOWINTASKBAR="yes" />
+	<!-- MS HTML Application : http://msdn2.microsoft.com/en-us/library/ms536481.asp -->
+<!-- <title>is filled by script, according to page Title.</title> -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+<link rel="styleSheet" href="autorun.css" type='text/css' >
+<script language="vbscript" type="text/vbscript" src='autorun.vbs'></script>
+<script language="vbscript" type="text/vbscript" >
+Option Explicit
+Dim helpPages , oDrive
+Dim bootConfigs
+Dim availableLocales
+
+availableLocales = "ar,bn,ca,de,el,en,es,eu,fr,it,nl,pa,pt_BR,pt,ru,sv,tr,zh_CN,zh_TW,"
+
+Sub window_onload
+	Dim volName
+	Call Could_Not_Load_AutorunVBS()
+
+	Set fso = CreateObject("Scripting.FileSystemObject")
+	Set WshShell = CreateObject("WScript.Shell")
+	Set oScriptFile = fso.GetFile(replace(oHTA.document.location.pathname,"%20"," ") )
+	Set oScriptFolder = fso.GetFolder(oScriptFile.ParentFolder )
+	Set oDrive = fso.GetDrive(fso.GetDriveName(oScriptFile.ParentFolder))
+
+	window.resizeTo  Between( window.screen.availWidth*0.9, 480, 640), Min(350, window.screen.availHeight)
+
+	volName = oDrive.volumeName
+	If (Trim(volName) = "") Then
+		volName = oHTA.APPLICATIONNAME
+	End If
+	window.document.title = volName
+	headertitle.innerHTML = volName
+
+	CurrentTab = ""
+	window.focus
+
+	Call buildMenu
+	DefaultTab = "MainPage"
+	Call ShowHideTab()
+
+	' msgbox oDrive.DriveType ' 2=Fixed ; 4=CDROM ; 1=Removable
+	'Msgbox fso.GetDriveName(oScriptFile.ParentFolder)
+	'strComputer = "."
+	'Set oWMI = GetObject("winmgmts:\\" & strComputer & "\root\cimv2")
+	'Set colDiskDrives = oWMI.ExecQuery("SELECT * FROM Win32_DiskDrive WHERE DeviceID='C:' ")
+	'For Each oLogicalDrive In colDiskDrives
+	'	MsgBox oLogicalDrive.
+
+	Call ChooseLang()
+	Call LoadSysConfFile()
+
+End Sub
+
+Sub startHelp
+	'Dim oShell
+	'Set oShell = WScript.CreateObject("WSCript.shell")
+	WshShell.run "cmd /c start ..\readme.html"
+	'Set oShell = Nothing
+End Sub
+
+</script>
+
+</head>
+<body id="oBody" XXXXXXonkeypress="keyEventHandler">
+	<div id="header">
+		<span id="debianlogo" alt="debian logo" style="display:inline-block;width:56;height:70;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='logo.png', sizingMethod='scale');" width="56" height="70"></span>
+		<h1 id="headertitle"><!-- Filled dynamicaly --></h1>
+		<div id="headersubtitle">Live Debian systems!</div>
+	</div>
+        <div id="menu">
+        <!-- Menu is generated dynamicaly -->
+        </div>
+		<table id="pannels">
+		<tbody id="main">
+			<tr id="MainPageContent" title="Main" class="tabContent">
+				<td><br/>
+<!-- COVERPAGE:START-TAG -->
+					<p>This CD/DVD contains <a href="http://debian-live.alioth.debian.org">Debian Live</a>, a version of <a href="http://www.debian.org/">Debian GNU/Linux</a> that can be run from the CD/DVD without being installed on the computer.</p>
+					<p>This laucher also also allows to run this Live system inside a QEMU virtual machine (see the VM tab).</p>
+<!-- COVERPAGE:END-TAG -->
+					<p align="right"><button onclick="startHelp">Help pages</button>&nbsp;&nbsp;</p>
+				</td>
+			</tr>
+
+			<tr id="qemuPageContent" title="VM" class="tabContent">
+				<td><br/>
+					<p>
+						Note: This disk contains a minimal version of QEMU, which lets you run the Live system inside a virtual machine. Running it is slower than running it on real hardware.
+					</p>
+					<p>
+						<select id="configList" onchange="configListChanged"></select>&nbsp;&nbsp;
+					Language&nbsp;:<select id="localesList" onchange="localeChanged"></select>
+					</p>
+					<p><button id="runVmBtn" onclick="call runVM">Launch Debian-Live in a virtual machine</button></p>
+				</td>
+			</tr>
+
+			<tr id="QemuOptionsContent" title="VM Options" class="tabContent">
+				<td>
+					<p>
+						Kernel&nbsp;:<br/>
+						<input id="bKernel" type="text" size="20">
+					</p>
+					<p>
+						initrd&nbsp;:<br/>
+						<input  id="bInitrd" type="text" size="20">
+					</p>
+					<p>
+						append options&nbsp;:<br/>
+						<input  id="bAppend" type="text" size="60">
+					</p>
+					<p style="display:none">
+						IP append options&nbsp;:<br/>
+						<input  id="bIPAppend" type="text">
+					</p>
+				</td>
+			</tr>
+
+
+			<tr id="AboutContent" class="tabContent" title="About" >
+				<td align="center">
+					<p>&nbsp;</p>
+					<p><b>Autorun4LinuxCD</b></p>
+					<p>A Live CD Launcher for Windows CD/DVD</p>
+					<hr width="40%" height="1">
+					<p>&copy; 2007,2008 Franklin Piat.</p>
+				</td>
+			</tr>
+		</tbody>
+		</table>
+	</body>
+</html>
+<!-- vim:set ft=html: -->

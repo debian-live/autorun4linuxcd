@@ -1,0 +1,44 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpatch/dpatch.make
+
+clean: unpatch
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+
+	rm -f shellrun/shellrun.exe
+
+	dh_clean
+
+build: build-stamp
+build-stamp: patch
+	dh_testdir
+
+	i586-mingw32msvc-gcc shellrun/shellrun.c -o shellrun/shellrun.exe
+
+	touch build-stamp
+
+install: build
+
+binary: binary-arch
+
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs
+	dh_installdocs
+	dh_install
+	dh_lintian
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary-indep:
+
+.PHONY: clean build install binary binary-arch binary-indep

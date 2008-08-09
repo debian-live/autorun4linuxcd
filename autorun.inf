@@ -1,0 +1,8 @@
+[autorun]
+OPEN=autorun\shellrun\shellrun.exe autorun\autorun.hta
+ICON=autorun\favicon.ico
+
+[Content]
+MusicFiles=no
+PictureFiles=no
+VideoFiles=no
