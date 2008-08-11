@@ -1,5 +1,27 @@
 autorun4linuxcd (0.13) unstable; urgency=low
 
-  * Initial release.
+  * Improve "About" and "FrontCover" tabs
+  * Implement "Help page" button
+  * Cleanup the code
+
+ -- Franklin Piat <fpiat@klabs.be>  Fri,  10 Aug 2008 14:38:00 -0300
+
+autorun4linuxcd (0.12) unreleased; urgency=low
+
+  * Initial packaging.
 
  -- Franklin Piat <fpiat@klabs.be>  Fri,  8 Aug 2008 23:38:00 -0300
+
+autorun4linuxcd (0.11) unreleased; urgency=low
+
+  * Application name is now derived from the CD's Label.
+  * Locales Names
+  * Some cleanup
+
+ -- Franklin Piat <fpiat@klabs.be>  Sat, 23 Jun 2007 15:52:00 +0000
+
+autorun4linuxcd (0.10) unreleased; urgency=low
+
+  * Initial (early) release.
+
+ -- Franklin Piat <fpiat@klabs.be>  Fri, 22 Jun 2007 12:27:00 +000

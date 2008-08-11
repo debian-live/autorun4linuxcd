@@ -137,7 +137,6 @@ End Sub
 
 Sub runVM()
 	Dim cmd, Drive
-'		& " -hda \\.\PhysicalDrive1 "_
 	Drive = oDrive.driveLetter
 	'Drive = "D"
 	cmd = """" & oScriptFolder.Path & "\qemu\qemu.exe"" -L " & oScriptFolder.Path & "\qemu\ -no-kqemu " _
@@ -151,7 +150,6 @@ Sub runVM()
 		cmd = cmd & " -append """ & Trim(bAppend.value) & """ "
 	End If
 
-	'WshShell.run  "cmd /k echo " & cmd
 	WshShell.run  cmd
 End Sub
 
@@ -324,9 +322,9 @@ End Sub
 ' ##Let's pick a keyboard and language (according to current windows session)
 Sub ChooseLang()
 	Dim lang,i,j,myOpt
-	If (InStr("PAD,"&availableLocales&",",  ","&Left(navigator.userLanguage,5))>1) Then
+	If (InStr("PAD," & availableLocales & ",",  "," & Left(navigator.userLanguage,5)) > 1) Then
 		lang = Left(navigator.userLanguage,5)
-	ElseIf (InStr("PAD,"&availableLocales&",",  ","&Left(navigator.userLanguage,2))>1) Then
+	ElseIf (InStr("PAD," & availableLocales & ",",  "," & Left(navigator.userLanguage,2)) > 1) Then
 		lang = Left(navigator.userLanguage,2)
 	Else
 		lang = ""
@@ -344,7 +342,6 @@ Sub ChooseLang()
 				Set myOpt = Document.createElement("OPTION")
 				myOpt.Value = s(4)
 				myOpt.Text = s(0)
-			'	MsgBox myOpt.Value &"/"& lang
 				localesList.add(myOpt)
 				If (s(2) = lang) Then
 					myOpt.selected="selected"
@@ -359,10 +356,6 @@ Sub ChooseLang()
 			Set myOpt = Document.createElement("OPTION")
 			myOpt.Value = Mid(availableLocales,i,j-i)
 			myOpt.Text = myOpt.Value
-		'	MsgBox myOpt.Value &"/"& lang
-		'		If (myOpt.Value = lang) Then
-		'			myOpt.selected="selected"
-		'		End If
 			localesList.add(myOpt)
 			i = j+1
 		Loop

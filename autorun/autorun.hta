@@ -3,21 +3,6 @@
 	auturun.hta - Autorun 4 Debian Linux-CD (under Windows)
 
     HISTORY :
-	autorun4linuxCD (0.13)
-	  * Improve "About" and "FrontCover" tabs
-        * Implement "Help page" button
-
-	autorun4linuxCD (0.11)
-	  * Application name is now derived from the CD's Label.
-	  * Locales Names
-	  * Some cleanup
-
-	  - Copyright (C) 2007 Franklin Piat <fpiat@bigfoot.com>
-
-	autorun4linuxCD (0.10)
-	  * Initial (early) release.
-
-	  - Copyright (C) 2007 Franklin Piat <fpiat@bigfoot.com>
 
     LICENSE :
 	This program is free software; you can redistribute it and/or modify
@@ -31,8 +16,8 @@
 	General Public License for more details.
 
 	On Debian GNU/Linux systems, the complete text of the GNU General Public
-	License can be found in ‘/usr/share/common-licenses/GPL’ or in the dpkg
-	source as the file ‘COPYING’
+	License can be found in "/usr/share/common-licenses/GPL" or in the dpkg
+	source as the file COPYING
 
  ##  ###################################################################### -->
 <head>
@@ -97,10 +82,7 @@ Sub window_onload
 End Sub
 
 Sub startHelp
-	'Dim oShell
-	'Set oShell = WScript.CreateObject("WSCript.shell")
 	WshShell.run "cmd /c start ..\readme.html"
-	'Set oShell = Nothing
 End Sub
 
 </script>
