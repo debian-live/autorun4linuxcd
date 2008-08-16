@@ -1,0 +1,20 @@
+
+Autorun 4 Debian Linux-CD
+-------------------------
+
+Overview:
+   Autorun 4 Debian Linux-CD is mainly meant to be used in Debian live CD/DVD.
+
+QuickStart:
+    
+
+Customising the autorun front page:
+    To customize the autorun's frontpage, you can use the following hack
+	grep -B 9999 '<!-- COVERPAGE:START-TAG -->' < autorun/autorun.hta >/tmp/a
+	echo newfrontpage.html >> /tmp/a
+	grep -A 9999 '<!-- COVERPAGE:AND-TAG -->' < autorun/autorun.hta >>/tmp/a
+	mv autorun/autorun.hta autorun/autorun.hta.old
+	mv /tmp/a autorun/autorun.hta
+
+See Also:
+	http://www.klabs.be/~fpiat/projects/autorun4linuxCD/

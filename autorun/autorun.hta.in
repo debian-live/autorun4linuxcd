@@ -21,7 +21,7 @@
 
  ##  ###################################################################### -->
 <head>
-<HTA:APPLICATION ID="oHTA" APPLICATIONNAME="Autorun for Linux CDs" VERSION="0.13"
+<HTA:APPLICATION ID="oHTA" APPLICATIONNAME="Autorun for Linux CDs" VERSION=""
 	WINDOWSTATE="normal"
 	SCROLL="auto" SCROLLFLAT="yes" INNERBORDER="no"
 	CAPTION="yes" SYSMENU="yes" ICON="favicon.ico" MAXIMIZEBUTTON="no" MINIMIZEBUTTON="yes"
